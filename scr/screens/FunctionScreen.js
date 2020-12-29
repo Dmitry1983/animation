@@ -8,7 +8,7 @@ export const FunctionScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text>FunctionScreen</Text>
-      <TouchableOpacity onPress={() => goToBackScreen()}>
+      <TouchableOpacity style={styles.button} onPress={() => goToBackScreen()}>
         <Text>Back</Text>
       </TouchableOpacity>
     </View>
@@ -21,5 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#2c3e50',
+  },
+  button: {
+    height: 50,
+    width: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    borderRadius: 8,
+    marginVertical: 20,
   },
 })
