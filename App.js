@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useRef } from 'react'
 import {
   Text,
   View,
@@ -6,12 +6,14 @@ import {
   Platform,
   Animated,
   ScrollView,
-  SafeAreaView,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 
 const HEADER_MIN_HEIGHT = 100
 const HEADER_MAX_HEIGHT = 240
+
+const imageSource = require('./assets/img.png')
 
 export default class App extends Component {
   constructor() {
@@ -29,6 +31,8 @@ export default class App extends Component {
   }
 
   render() {
+    // Аналогично componentDidMount и componentDidUpdate:
+
     const headerHeight = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
@@ -41,14 +45,43 @@ export default class App extends Component {
       extrapolate: 'clamp',
     })
 
+    const headerOpacity = this.scrollYAnimatedValue.interpolate({
+      inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
+    })
+    const headerTitleColor = this.scrollYAnimatedValue.interpolate({
+      inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+      outputRange: ['white', 'black'],
+      extrapolate: 'clamp',
+    })
+
     return (
       <View style={styles.container}>
         <Animated.View
           style={[
             styles.animatedHeaderContainer,
-            { height: headerHeight, backgroundColor: headerBackgroundColor },
+            {
+              height: headerHeight,
+              backgroundColor: '#20232A',
+              //backgroundColor: headerBackgroundColor,
+              // opacity: headerOpacity,
+            },
           ]}
         >
+          <Animated.Image
+            style={[
+              styles.animatedHeaderContainer,
+              {
+                height: headerHeight,
+                //backgroundColor: headerBackgroundColor,
+                backgroundColor: 'orange',
+                opacity: headerOpacity,
+                width: '100%',
+              },
+            ]}
+            source={imageSource}
+          ></Animated.Image>
           <Text style={styles.headerText}>Header</Text>
         </Animated.View>
         <ScrollView
@@ -86,15 +119,14 @@ const styles = StyleSheet.create({
     paddingTop: 1,
   },
   animatedHeaderContainer: {
-    //position: 'absolute',
     top: Platform.OS == 'ios' ? 0 : 0,
-    //left: 0,
-    //right: 0,
     justifyContent: 'flex-end',
-    paddingBottom: 15,
+    // paddingBottom: 15,
     alignItems: 'center',
   },
   headerText: {
+    position: 'absolute',
+    paddingBottom: 10,
     color: 'white',
     fontSize: 26,
   },
