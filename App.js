@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import {
   Text,
   View,
@@ -20,13 +20,7 @@ export default class App extends Component {
 
     this.array = []
   }
-  // Похож на componentDidMount и componentDidUpdate:
-  // useEffect(() => {
-  //   // Обновляем название докуммента, используя API браузера
-  //   for (var i = 1; i <= 75; i++) {
-  //     this.array.push(i)
-  //   }
-  // });
+
   UNSAFE_componentWillMount() {
     for (var i = 1; i <= 75; i++) {
       this.array.push(i)
@@ -42,7 +36,7 @@ export default class App extends Component {
 
     const headerBackgroundColor = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-      outputRange: ['#e91e63', 'grey'],
+      outputRange: ['red', 'grey'],
       extrapolate: 'clamp',
     })
 
@@ -50,16 +44,21 @@ export default class App extends Component {
       <SafeAreaView style={styles.container}>
         <ScrollView
           contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
-          scrollEventThrottle={16}
-          onScroll={Animated.event([
-            {
-              nativeEvent: { contentOffset: { y: this.scrollYAnimatedValue } },
-            },
-          ])}
+          scrollEventThrottle={20}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: { y: this.scrollYAnimatedValue },
+                },
+              },
+            ],
+            { useNativeDriver: false }
+          )}
         >
           {this.array.map((item, key) => (
             <View key={key} style={styles.item}>
-              <Text style={styles.itemText}>Row No : {item}</Text>
+              <Text style={styles.itemText}>Title number : {item}</Text>
             </View>
           ))}
         </ScrollView>
