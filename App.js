@@ -7,7 +7,6 @@ import {
   Animated,
   ScrollView,
   TouchableOpacity,
-  Image,
 } from 'react-native'
 
 const HEADER_MIN_HEIGHT = 100
@@ -31,30 +30,28 @@ export default class App extends Component {
   }
 
   render() {
-    // Аналогично componentDidMount и componentDidUpdate:
-
     const headerHeight = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
       extrapolate: 'clamp',
     })
 
-    const headerBackgroundColor = this.scrollYAnimatedValue.interpolate({
-      inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-      outputRange: ['red', 'orange'],
-      extrapolate: 'clamp',
-    })
+    // const headerBackgroundColor = this.scrollYAnimatedValue.interpolate({
+    //   inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+    //   outputRange: ['red', 'orange'],
+    //   extrapolate: 'clamp',
+    // })
 
     const headerOpacity = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [1, 0],
       extrapolate: 'extend',
     })
-    const headerTitleColor = this.scrollYAnimatedValue.interpolate({
-      inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-      outputRange: ['white', 'black'],
-      extrapolate: 'clamp',
-    })
+    // const headerTitleColor = this.scrollYAnimatedValue.interpolate({
+    //   inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
+    //   outputRange: ['white', 'black'],
+    //   extrapolate: 'clamp',
+    // })
 
     return (
       <View style={styles.container}>
@@ -64,8 +61,6 @@ export default class App extends Component {
             {
               height: headerHeight,
               backgroundColor: '#20232A',
-              //backgroundColor: headerBackgroundColor,
-              // opacity: headerOpacity,
             },
           ]}
         >
@@ -74,8 +69,6 @@ export default class App extends Component {
               styles.animatedHeaderContainer,
               {
                 height: headerHeight,
-                //backgroundColor: headerBackgroundColor,
-                /// backgroundColor: 'orange',
                 opacity: headerOpacity,
                 width: '100%',
               },
@@ -88,6 +81,7 @@ export default class App extends Component {
         <ScrollView
           contentContainerStyle={styles.scrollViewStyle}
           scrollEventThrottle={20}
+          showsVerticalScrollIndicator={false}
           onScroll={Animated.event(
             [
               {
@@ -122,7 +116,6 @@ const styles = StyleSheet.create({
   animatedHeaderContainer: {
     top: Platform.OS == 'ios' ? 0 : 0,
     justifyContent: 'flex-end',
-    // paddingBottom: 15,
     alignItems: 'center',
   },
   headerText: {
@@ -133,10 +126,13 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#2B2F3A',
-    marginVertical: 1,
     height: 75,
     justifyContent: 'center',
     alignItems: 'center',
+    borderTopColor: '#7B8292',
+    borderBottomColor: '#7B8292',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   itemText: {
     color: 'white',
