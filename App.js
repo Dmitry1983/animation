@@ -7,10 +7,11 @@ import {
   Animated,
   ScrollView,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native'
 
-const HEADER_MIN_HEIGHT = 50
-const HEADER_MAX_HEIGHT = 200
+const HEADER_MIN_HEIGHT = 100
+const HEADER_MAX_HEIGHT = 240
 
 export default class App extends Component {
   constructor() {
@@ -22,7 +23,7 @@ export default class App extends Component {
   }
 
   UNSAFE_componentWillMount() {
-    for (var i = 1; i <= 75; i++) {
+    for (var i = 1; i <= 50; i++) {
       this.array.push(i)
     }
   }
@@ -36,14 +37,22 @@ export default class App extends Component {
 
     const headerBackgroundColor = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
-      outputRange: ['red', 'grey'],
+      outputRange: ['red', 'orange'],
       extrapolate: 'clamp',
     })
 
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.animatedHeaderContainer,
+            { height: headerHeight, backgroundColor: headerBackgroundColor },
+          ]}
+        >
+          <Text style={styles.headerText}>Header</Text>
+        </Animated.View>
         <ScrollView
-          contentContainerStyle={{ paddingTop: HEADER_MAX_HEIGHT }}
+          contentContainerStyle={styles.scrollViewStyle}
           scrollEventThrottle={20}
           onScroll={Animated.event(
             [
@@ -57,21 +66,12 @@ export default class App extends Component {
           )}
         >
           {this.array.map((item, key) => (
-            <View key={key} style={styles.item}>
+            <TouchableOpacity key={key} style={styles.item}>
               <Text style={styles.itemText}>Title number : {item}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
-
-        <Animated.View
-          style={[
-            styles.animatedHeaderContainer,
-            { height: headerHeight, backgroundColor: headerBackgroundColor },
-          ]}
-        >
-          <Text style={styles.headerText}>Animated Header</Text>
-        </Animated.View>
-      </SafeAreaView>
+      </View>
     )
   }
 }
@@ -80,28 +80,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    backgroundColor: 'darkgray',
+  },
+  scrollViewStyle: {
+    paddingTop: 1,
   },
   animatedHeaderContainer: {
-    position: 'absolute',
+    //position: 'absolute',
     top: Platform.OS == 'ios' ? 0 : 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
+    //left: 0,
+    //right: 0,
+    justifyContent: 'flex-end',
+    paddingBottom: 15,
     alignItems: 'center',
   },
   headerText: {
     color: 'white',
-    fontSize: 22,
+    fontSize: 26,
   },
   item: {
-    backgroundColor: '#ff9e80',
-    marginVertical: 5,
-    height: 45,
+    backgroundColor: 'lightgrey',
+    marginVertical: 0.5,
+    height: 75,
     justifyContent: 'center',
     alignItems: 'center',
   },
   itemText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: 20,
   },
 })
