@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 
 const HEADER_MIN_HEIGHT = 100
-const HEADER_MAX_HEIGHT = 240
+const HEADER_MAX_HEIGHT = 278
 
 const imageSource = require('./assets/img.png')
 
@@ -48,7 +48,7 @@ export default class App extends Component {
     const headerOpacity = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
       outputRange: [1, 0],
-      extrapolate: 'clamp',
+      extrapolate: 'extend',
     })
     const headerTitleColor = this.scrollYAnimatedValue.interpolate({
       inputRange: [0, HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT],
@@ -75,11 +75,12 @@ export default class App extends Component {
               {
                 height: headerHeight,
                 //backgroundColor: headerBackgroundColor,
-                backgroundColor: 'orange',
+                /// backgroundColor: 'orange',
                 opacity: headerOpacity,
                 width: '100%',
               },
             ]}
+            resizeMode="cover"
             source={imageSource}
           ></Animated.Image>
           <Text style={styles.headerText}>Header</Text>
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: 'darkgray',
+    backgroundColor: '#20232A',
   },
   scrollViewStyle: {
     paddingTop: 1,
@@ -131,14 +132,14 @@ const styles = StyleSheet.create({
     fontSize: 26,
   },
   item: {
-    backgroundColor: 'lightgrey',
-    marginVertical: 0.5,
+    backgroundColor: '#2B2F3A',
+    marginVertical: 1,
     height: 75,
     justifyContent: 'center',
     alignItems: 'center',
   },
   itemText: {
-    color: 'black',
+    color: 'white',
     fontSize: 20,
   },
 })
