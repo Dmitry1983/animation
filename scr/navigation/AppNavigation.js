@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { FunctionScreen, ComponentScreen, SimpleScreen } from '../screens'
+import { FunctionScreen, SimpleScreen } from '../screens'
 import ROUTE from '../constants/route'
 
 const Stack = createStackNavigator()

@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   item: {
     backgroundColor: '#2B2F3A',
-    height: 75,
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     borderTopColor: '#7B8292',
